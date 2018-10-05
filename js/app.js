@@ -1,6 +1,7 @@
 // Variables
 const carrito = document.getElementById('carrito');
 const cursos = document.getElementById('lista-cursos');
+const tablaCarrito = document.querySelector('#carrito tbody');
 
 // Eventos
 cargarEventListeners()
@@ -15,11 +16,34 @@ function anadirCarrito(e) {
   if(e.target.classList.contains('agregar-carrito')){
     const curso = e.target.parentElement.parentElement;
 
-    leerDatosCurso(curso);
+    const articulo = leerDatosCurso(curso);
+    pintarArticulo(articulo);
+
   }
 }
 
 function leerDatosCurso(curso){
-  console.log(curso);
+  const id = curso.querySelector('.agregar-carrito').getAttribute('data-id');
+  const foto = curso.querySelector('.imagen-curso').src;
+  const titulo = curso.querySelector('h4').textContent;
+  const precio = curso.querySelector('.precio').textContent;
+  const articulo = {id, foto, titulo, precio};
+  return articulo;
+}
+
+function pintarArticulo(curso){
+
+  const row = document.createElement('tr');
+
+  row.innerHTML = `
+    <tr>
+      <td><img src="${curso.foto}" alt="${curso.titulo}" width=100 /></td>
+      <td>${curso.titulo}</td>
+      <td>${curso.precio}</td>
+      <td><a href="${curso.foto}" class="borrar-curso" data-id="${curso.id}" />X</a>
+    </tr>
+  `
+
+  tablaCarrito.appendChild(row);
 }
 
