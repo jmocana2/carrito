@@ -6,7 +6,10 @@ const tablaCarrito = document.querySelector('#carrito tbody');
 // Eventos
 cargarEventListeners()
 function cargarEventListeners(){
+  //añade un curso al carrito
   cursos.addEventListener('click', anadirCarrito)
+  //Borra un curso del carrito
+  carrito.addEventListener('click', borrarCursoCarrito);
 }
 
 // Funciones
@@ -45,5 +48,13 @@ function pintarArticulo(curso){
   `
 
   tablaCarrito.appendChild(row);
+}
+
+function borrarCursoCarrito(e) {
+  e.preventDefault();
+
+  if(e.target.classList.contains('borrar-curso')){
+    e.target.parentElement.parentElement.remove();
+  }
 }
 
