@@ -2,6 +2,7 @@
 const carrito = document.getElementById('carrito');
 const cursos = document.getElementById('lista-cursos');
 const tablaCarrito = document.querySelector('#carrito tbody');
+//prueba commit
 
 // Eventos
 cargarEventListeners()
