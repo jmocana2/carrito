@@ -13,6 +13,8 @@ function cargarEventListeners(){
   carrito.addEventListener('click', borrarCursoCarrito);
   //Borra todos los cursos del carrito
   vaciarCarrito.addEventListener('click', borrarCursos);
+  //Guarda los cursos en LocalStorage al cargar el documento
+  document.addEventListener('DOMContentLoaded', leerLocalStorage)
 }
 
 // Funciones
@@ -23,7 +25,7 @@ function anadirCarrito(e) {
     const curso = e.target.parentElement.parentElement;
 
     const articulo = leerDatosCurso(curso);
-    pintarArticulo(articulo);
+    pintarArticulo(articulo, true);
 
   }
 }
@@ -37,7 +39,7 @@ function leerDatosCurso(curso){
   return articulo;
 }
 
-function pintarArticulo(curso){
+function pintarArticulo(curso, guardar){
 
   const row = document.createElement('tr');
 
@@ -51,7 +53,9 @@ function pintarArticulo(curso){
   `
 
   tablaCarrito.appendChild(row);
-  guardarCursosLS(curso);
+  if(guardar){
+    guardarCursosLS(curso);
+  }
 }
 
 function borrarCursoCarrito(e) {
@@ -92,5 +96,13 @@ function obtenerCursosLS(){
   }
 
   return cursosLS;
+}
+
+function leerLocalStorage(){
+   let cursos = obtenerCursosLS();
+   
+   cursos.map(curso => {
+    pintarArticulo(curso, false);
+   })
 }
 
