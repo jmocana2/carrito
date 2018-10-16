@@ -51,6 +51,7 @@ function pintarArticulo(curso){
   `
 
   tablaCarrito.appendChild(row);
+  guardarCursosLS(curso);
 }
 
 function borrarCursoCarrito(e) {
@@ -69,5 +70,27 @@ function borrarCursos(e) {
   }
   
   return false;
+}
+
+function guardarCursosLS(curso){
+  let cursos;
+  
+  cursos = obtenerCursosLS();
+  console.log(cursos);
+  cursos.push(curso); 
+
+ localStorage.setItem('cursos', JSON.stringify(cursos));
+}
+
+function obtenerCursosLS(){
+  let cursosLS;
+
+  if(localStorage.getItem('cursos') === null){
+    cursosLS = [];
+  }else{
+    cursosLS = JSON.parse(localStorage.getItem('cursos'));
+  }
+
+  return cursosLS;
 }
 
