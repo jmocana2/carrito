@@ -2,7 +2,7 @@
 const carrito = document.getElementById('carrito');
 const cursos = document.getElementById('lista-cursos');
 const tablaCarrito = document.querySelector('#carrito tbody');
-//prueba commit
+const vaciarCarrito = document.getElementById('vaciar-carrito');
 
 // Eventos
 cargarEventListeners()
@@ -11,6 +11,8 @@ function cargarEventListeners(){
   cursos.addEventListener('click', anadirCarrito)
   //Borra un curso del carrito
   carrito.addEventListener('click', borrarCursoCarrito);
+  //Borra todos los cursos del carrito
+  vaciarCarrito.addEventListener('click', borrarCursos);
 }
 
 // Funciones
@@ -57,5 +59,15 @@ function borrarCursoCarrito(e) {
   if(e.target.classList.contains('borrar-curso')){
     e.target.parentElement.parentElement.remove();
   }
+}
+
+function borrarCursos(e) {
+  e.preventDefault();
+
+  while(tablaCarrito.firstChild){
+    tablaCarrito.removeChild(tablaCarrito.firstChild);
+  }
+  
+  return false;
 }
 
