@@ -61,17 +61,29 @@ function pintarArticulo(curso, guardar){
 function borrarCursoCarrito(e) {
   e.preventDefault();
 
+  let curso;
+
   if(e.target.classList.contains('borrar-curso')){
     e.target.parentElement.parentElement.remove();
   }
+
+  curso = e.target.parentElement.parentElement;
+  let cursoId = curso.querySelector('a').getAttribute('data-id');
+
+  //borramos curso de Local Storage
+  borrarCursosLocalStorage(cursoId)
 }
 
 function borrarCursos(e) {
   e.preventDefault();
 
+  //Borramos todos los cursos del carrito
   while(tablaCarrito.firstChild){
     tablaCarrito.removeChild(tablaCarrito.firstChild);
   }
+
+  // vaciamos Local Storage
+  localStorage.clear();
   
   return false;
 }
@@ -104,5 +116,24 @@ function leerLocalStorage(){
    cursos.map(curso => {
     pintarArticulo(curso, false);
    })
+}
+
+
+// Borra un curso de Local Storage
+function borrarCursosLocalStorage(cursoId){
+  
+  // Obtenemos array con todos los cursos del carrito
+  let cursosLS = obtenerCursosLS();
+
+  // Recorremos el array y eliminamos curso con id cursoId
+  cursosLS.forEach(curso => {
+    if(curso.id === cursoId){
+      cursosLS.splice(curso, 1);
+    }
+  });
+
+  // Guardamos array sin curso en Local Storage
+  localStorage.setItem('cursos', JSON.stringify(cursosLS));
+
 }
 
